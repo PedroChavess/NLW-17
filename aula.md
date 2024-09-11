@@ -23,16 +23,39 @@ Apresentar os dados
 
 ## Escopos e variáveis:
 
-Variáveis globais e locais
-Constantes (não se pode mudar o tipo da variável, enquanto o let é possível modificar seu valor)
-
+- [x] Variáveis globais e locais
+- [x] Constantes (não se pode mudar o tipo da variável, enquanto o let é possível modificar seu valor)
 
 ## Tipos de dados:
 
-Strings (textos):"" '' ``
-Number: 2 1.4
-Function
+- [x] Strings (textos):"" '' ``
+- [x] Numbers: 2 1.4
+- [x] Boolean: true, false
 
 ## Operadores
 
-Operadores de atribuição de valor, ou seja =
+- [x] Operadores de atribuição de valor, ou seja =
+- [x] Operador de concatenação +
+
+## Estruturas de dados:
+
+### Arrays:
+
+- [x] Uma lista que contém qualquer tipo de dado
+
+### Objetos:
+
+- [x] Atributos e métodos
+- [x] Criação e manipulação de objetos
+- [x] Acesso a propeiradades de objetos
+
+
+### Functions
+
+- [x] Criar, paassar argumento
+- [x] Executar
+- [x] arrow function / named function, exeplo:
+    //function // arrow function
+    const criarMeta = () => {}
+
+    function criarMeta() {}
