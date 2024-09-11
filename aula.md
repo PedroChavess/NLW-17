@@ -59,3 +59,7 @@ Apresentar os dados
     const criarMeta = () => {}
 
     function criarMeta() {}
+
+# Estrutura de repetição
+
+- [x] while
