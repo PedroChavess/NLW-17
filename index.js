@@ -58,7 +58,7 @@ const metasRealizadas = async () => {
     }
 
     await select({
-        message: "Metas Realizadas " + realizadas.length,
+        message: "Metas Realizadas: " + realizadas.length,
         choices: [...realizadas]
     })
 }
@@ -74,12 +74,36 @@ const metasAbertas = async () => {
     }
 
     await select({
-        message: "Metas Abertas " + abertas.length,
+        message: "Metas Abertas: " + abertas.length,
         choices: [...abertas]
     })
 }
 
-const start= async () => {
+const deletarMetas = async () => {
+    const metasDesmarcadas = metas.map((meta) => {
+        return { value: meta.value, checked: false }
+    })
+    const itemsADeletar = await checkbox({
+        messasge: "Selecione item para deletar",
+        choices: [...metasDesmarcadas],
+        instructions: false,
+    })
+
+    if(itemsADeletar.length == 0) {
+        console.log("Nenhum item para deletar!")
+        return
+    }
+
+    itemsADeletar.forEach((item) => {
+        metas = metas.filter((meta) => {
+            return meta.value != item
+        })
+    })
+
+    console.log("Meta(s) deletada(s) com suscesso!")
+}
+
+const start = async () => {
     while(true){
         //sempre que uma constante tem o await (aguardar), a função precisa de ser async
         const opcao = await select({ //o await está esperando uma função que é uma promessa, uma promessa que o usuário vai escrever essas coisas
@@ -100,6 +124,10 @@ const start= async () => {
                 {
                     name: "Metas abertas",
                     value: "abertas"
+                },
+                {
+                    name: "Deletar metas",
+                    value: "deletar"
                 },
                 {
                     name: "Sair",
@@ -124,6 +152,10 @@ const start= async () => {
             
             case "abertas":
                 await metasAbertas()
+                break
+            
+            case "deletar":
+                await deletarMetas()
                 break
 
             case "sair":
