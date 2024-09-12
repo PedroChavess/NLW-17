@@ -33,16 +33,18 @@ Apresentar os dados
 - [x] Boolean: true, false
 
 ## Operadores
-
+//No JavaScript, tudo é entendido como um objeto
 - [x] Operadores de atribuição de valor, ou seja: =
 - [x] Operador de concatenação: +
 - [x] Operadores de comparação: == (sempre retorna um booleano), !=, <, >, <=, =>
+- [x] Spread operator: ...
 
 ## Estruturas de dados:
 
 ### Arrays:
 
 - [x] Uma lista que contém qualquer tipo de dado
+- [x] Métodos de array: push, [find, forEach, filter] : HOF (Higher Order Functions)
 
 ### Objetos:
 
