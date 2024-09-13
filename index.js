@@ -1,11 +1,23 @@
 const { select, input, checkbox } = require('@inquirer/prompts')
+const fs = require("fs").promises
 
-let mensagem = "Bem vindo ao App de Metas!"
-let meta = {
-    value: 'Tomar 3L de água por dia',
-    checked: false,
+let mensagem = "Bem vindo ao App de Metas!";
+
+let metas
+
+const carregarMetas = async () => {
+    try{
+        const dados = await fs.readFile("metas.json", "utf-8")
+        metas = JSON.parse(dados)
+    }
+    catch(erro) {
+        metas = []
+    }
 }
-let metas = [ meta ]
+
+const salvarMetas = async () => {
+    await fs.writeFile("metas.json", JSON.stringify(metas, null, 2)) //as duas últimas informações, são apenas pra configurar o arquivo JSON
+}
 
 const cadastrarMeta = async () => {
     const meta = await input ({message: "Digite a meta:"})
@@ -23,6 +35,10 @@ const cadastrarMeta = async () => {
 }
 
 const listarMetas = async () => {
+    if(metas.length == 0) {
+        mensagem = "Não existem metas!"
+        return
+    }
     const respostas = await checkbox({//coleta de dados
         message: "Use as setas para mudar de meta, o espaço para marcar ou desmarcar e o Enter para finalizar essa etapa.",
         choices: [...metas],//os 3 pontinhos está puxando tudo que está dentro de metas
@@ -51,6 +67,10 @@ const listarMetas = async () => {
 }
 
 const metasRealizadas = async () => {
+    if(metas.length == 0) {
+        mensagem = "Não existem metas!"
+        return
+    }
     const realizadas = metas.filter( (meta) => {
         return meta.checked
     })
@@ -67,6 +87,11 @@ const metasRealizadas = async () => {
 }
 
 const metasAbertas = async () => {
+    if(metas.length == 0) {
+        mensagem = "Não existem metas!"
+        return
+    }
+
     const abertas = metas.filter((meta) => {//entra como falso (não marcado nas metas realizadas), mas precisa se tornar verdadeiro para que entre no filtro (entre como meta aberta)
         return meta.checked != true//invertendo o valor de um booleano
     })
@@ -83,6 +108,11 @@ const metasAbertas = async () => {
 }
 
 const deletarMetas = async () => {
+    if(metas.length == 0) {
+        mensagem = "Não existem metas!"
+        return
+    }
+    
     const metasDesmarcadas = metas.map((meta) => {
         return { value: meta.value, checked: false }
     })
@@ -117,9 +147,11 @@ const mostrarMensagem = () => {
 }
 
 const start = async () => {
-
+    await carregarMetas()
+    
     while(true){
         mostrarMensagem()
+        await salvarMetas()
         //sempre que uma constante tem o await (aguardar), a função precisa de ser async
         const opcao = await select({ //o await está esperando uma função que é uma promessa, uma promessa que o usuário vai escrever essas coisas
                 message: "Menu>",
